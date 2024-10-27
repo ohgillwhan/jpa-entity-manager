@@ -23,8 +23,8 @@ class DefaultSelectDMLGeneratorTest {
         EntityTable entityTable = EntityTable.from(Person.class);
         DefaultSelectDMLGenerator generator = new DefaultSelectDMLGenerator();
 
-        String dml = generator.generateFindById(entityTable, 3);
+        String dml = generator.generateFindById(entityTable);
 
-        assertThat(dml).isEqualTo("select * from users where id = 3;");
+        assertThat(dml).isEqualTo("select * from users where id = ?;");
     }
 }

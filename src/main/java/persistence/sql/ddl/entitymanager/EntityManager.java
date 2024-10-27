@@ -1,4 +1,4 @@
-package persistence.sql.ddl;
+package persistence.sql.ddl.entitymanager;
 
 public interface EntityManager {
     <T> T find(Class<T> clazz, Object id);

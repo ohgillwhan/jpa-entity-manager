@@ -46,4 +46,8 @@ public record EntityIdColumn(EntityColumn entityColumn, GenerationType generatio
     public void applyId(Object entity, Object valueOfId) {
         entityColumn.applyValue(entity, valueOfId);
     }
+
+    public boolean isIdentityGenerationType() {
+        return this.generationType == GenerationType.IDENTITY;
+    }
 }

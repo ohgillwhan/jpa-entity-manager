@@ -32,4 +32,22 @@ class EntityIdColumnTest {
 
         assertThat(entityIdColumn.generationType()).isEqualTo(GenerationType.IDENTITY);
     }
+
+    @Test
+    void IDENTITY면_아이덴티티_사용_은_참이다() {
+        EntityIdColumn entityIdColumn = new EntityIdColumn(null, GenerationType.IDENTITY);
+
+        boolean result = entityIdColumn.isIdentityGenerationType();
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void IDENTITY가_아니면_아이덴티티_사용_은_거짓이다() {
+        EntityIdColumn entityIdColumn = new EntityIdColumn(null, GenerationType.AUTO);
+
+        boolean result = entityIdColumn.isIdentityGenerationType();
+
+        assertThat(result).isFalse();
+    }
 }

@@ -114,4 +114,8 @@ public record EntityTable(Class<?> clazz, String tableName, List<EntityColumn> a
     public void applyId(Object entity, Object id) {
         idColumn.applyId(entity, id);
     }
+
+    public boolean useAutoGenerateKey() {
+        return idColumn.isIdentityGenerationType();
+    }
 }

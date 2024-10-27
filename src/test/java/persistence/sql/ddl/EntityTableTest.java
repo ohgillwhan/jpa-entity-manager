@@ -149,4 +149,22 @@ class EntityTableTest {
 
         assertThat(id).isEqualTo(10L);
     }
+
+    @Test
+    void 자동생성키를_사용하면_자동생성_키_사용_여부는_참이다() {
+        EntityTable entityTable = EntityTable.from(Person.class);
+
+        boolean result = entityTable.useAutoGenerateKey();
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void 자동생성키를_사용하지_않으면_자동생성_키_사용_여부는_거짓이다() {
+        EntityTable entityTable = EntityTable.from(PersonNotIdentity.class);
+
+        boolean result = entityTable.useAutoGenerateKey();
+
+        assertThat(result).isFalse();
+    }
 }

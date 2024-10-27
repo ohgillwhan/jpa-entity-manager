@@ -9,7 +9,7 @@ public class DefaultSelectDMLGenerator implements SelectDMLGenerator {
     }
 
     @Override
-    public String generateFindById(EntityTable entityTable, Object id) {
-        return "select * from %s where %s = %s;".formatted(entityTable.tableName(), entityTable.getNameOfIdColumn(), id);
+    public String generateFindById(EntityTable entityTable) {
+        return "select * from %s where %s = ?;".formatted(entityTable.tableName(), entityTable.getNameOfIdColumn());
     }
 }

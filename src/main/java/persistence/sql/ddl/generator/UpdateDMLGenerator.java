@@ -1,5 +1,7 @@
 package persistence.sql.ddl.generator;
 
+import persistence.sql.ddl.EntityTable;
+
 public interface UpdateDMLGenerator {
-    String generate(Object entity);
+    String generate(EntityTable entityTable);
 }

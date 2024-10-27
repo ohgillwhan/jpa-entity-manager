@@ -23,8 +23,8 @@ class DefaultDeleteDMLGeneratorTest {
         EntityTable entityTable = EntityTable.from(Person.class);
         DefaultDeleteDMLGenerator generator = new DefaultDeleteDMLGenerator();
 
-        String dml = generator.generateDeleteById(entityTable, 3);
+        String dml = generator.generateDeleteById(entityTable);
 
-        assertThat(dml).isEqualTo("delete from users where id = 3;");
+        assertThat(dml).isEqualTo("delete from users where id = ?;");
     }
 }

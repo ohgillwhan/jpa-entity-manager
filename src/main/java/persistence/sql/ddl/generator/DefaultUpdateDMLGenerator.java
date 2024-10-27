@@ -9,41 +9,27 @@ import java.util.stream.Collectors;
 
 public class DefaultUpdateDMLGenerator implements UpdateDMLGenerator {
     @Override
-    public String generate(Object entity) {
-        EntityTable entityTable = EntityTable.from(entity.getClass());
-
-        List<String> columnNames = getColumnNames(entityTable, entity);
-        String set = setClause(entityTable, columnNames, entity);
-        String where = whereClause(entityTable, entity);
+    public String generate(EntityTable entityTable) {
+        List<String> columnNames = getColumnNames(entityTable);
+        String set = setClause(columnNames);
+        String where = whereClause(entityTable);
 
         return "UPDATE %s SET %s WHERE %s;".formatted(entityTable.tableName(), set, where);
     }
 
-    private String whereClause(EntityTable entityTable, Object entity) {
+    private String whereClause(EntityTable entityTable) {
         String idColumnName = entityTable.getNameOfIdColumn();
 
-        Object idValue = getValue(entityTable, idColumnName, entity);
-
-        return "%s = %s".formatted(idColumnName, idValue);
+        return "%s = ?".formatted(idColumnName);
     }
 
-    private String setClause(EntityTable entityTable, List<String> columnNames, Object object) {
-        return columnNames.stream().map(columnName -> "%s = %s".formatted(columnName, getValue(entityTable, columnName, object)))
+    private String setClause(List<String> columnNames) {
+        return columnNames.stream().map("%s = ?"::formatted)
             .collect(Collectors.joining(","));
     }
 
-    private List<String> getColumnNames(EntityTable entityTable, Object entity) {
-        if (hasIdValue(entityTable, entity)) {
-            return entityTable.getAllColumnNames();
-        } else {
-            return entityTable.getColumnNames();
-        }
-    }
-
-    private boolean hasIdValue(EntityTable entityTable, Object object) {
-        Field field = entityTable.getFieldByIdColumn();
-
-        return FieldUtils.getValue(field, object) != null;
+    private List<String> getColumnNames(EntityTable entityTable) {
+        return entityTable.getColumnNames();
     }
 
     private Object getValue(EntityTable entityTable, String columnName, Object object) {

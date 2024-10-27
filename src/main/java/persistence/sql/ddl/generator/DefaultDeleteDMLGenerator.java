@@ -9,7 +9,7 @@ public class DefaultDeleteDMLGenerator implements DeleteDMLGenerator {
     }
 
     @Override
-    public String generateDeleteById(EntityTable entityTable, Object id) {
-        return "delete from %s where %s = %s;".formatted(entityTable.tableName(), entityTable.getNameOfIdColumn(), id);
+    public String generateDeleteById(EntityTable entityTable) {
+        return "delete from %s where %s = ?;".formatted(entityTable.tableName(), entityTable.getNameOfIdColumn());
     }
 }

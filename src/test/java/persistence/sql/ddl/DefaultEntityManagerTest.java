@@ -5,10 +5,8 @@ import database.H2;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import persistence.sql.ddl.DefaultEntityManager;
-import persistence.sql.ddl.EntityManager;
-import persistence.sql.ddl.EntityTable;
-import persistence.sql.ddl.Person;
+import persistence.sql.ddl.entitymanager.DefaultEntityManager;
+import persistence.sql.ddl.entitymanager.EntityManager;
 import persistence.sql.ddl.dialect.Dialect;
 import persistence.sql.ddl.dialect.H2Dialect;
 import persistence.sql.ddl.generator.*;
@@ -49,8 +47,9 @@ class DefaultEntityManagerTest {
         Connection connection = server.getConnection();
         EntityManager entityManager = new DefaultEntityManager(connection);
         Person person = new Person(1L, "name", 3, "email", 0);
+        EntityTable entityTable = EntityTable.from(person.getClass());
 
-        String query = insertDMLGenerator.generate(person);
+        String query = insertDMLGenerator.generate(entityTable);
         executeQuery(connection, query);
 
         Person found = entityManager.find(Person.class, person.getId());
